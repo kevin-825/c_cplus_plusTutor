@@ -17,7 +17,7 @@ int main(){
         union grade{ 
             int percentage_grade; //ex: 99% 
             char letter_grade; // 'B' 
-        }; 
+        }grade; 
         int grade_format; // I set to 0 if grade is int, 1 if grade is char
     };
     struct student frank;

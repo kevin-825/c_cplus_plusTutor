@@ -1,0 +1,42 @@
+Today… 
+• Computer Memory �
+• Pointers/Addresses �
+• Arrays 
+• Memory Allocation
+
+
+1.Stack contains local variables from functions and 
+related book-keeping data
+
+2. Pointers are integer variables themselves, so can 
+have pointer to pointers: char **ptr; 
+
+
+char        1byte
+short int   2byte
+int         4byte
+long int(long) 4byte
+bool        1byte
+float       4 byte
+double      8 byte
+long double 8 byte
+
+
+3.Can use void pointers, just cannot dereference without casting
+
+4.Array variables are pointers to the array start! 
+5. Array indexing is same as dereferencing after pointer addition. 
+ str[1] = ‘a’ is same as *(str+1) = ‘a’ 
+6.  No string data type in C. Instead, a string is interpreted as a null-terminated char array. 
+Null-terminated = last char is null char ‘\0’, not explicitly written . String literals use “ ”.
+Compiler converts literals to char array. 
+    char str[] = “abc”; 
+
+7. #include <string.h> 
+
+
+8.Mem alloc
+• #include <stdlib.h> 
+• sizeof (a C language keyword) returns number of bytes of a data type. 
+     sizeof(char)
+     sizeof(int)

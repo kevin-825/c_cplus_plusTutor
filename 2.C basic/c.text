@@ -1,0 +1,40 @@
+1. Blocks / braces often optional (if, while, for):
+   if (con) expression;
+
+2.Empty for loop is an “infinite” while loop:
+    for (;;) expression;
+
+
+3. The goto statement in detail 
+• Syntax: 
+	goto LABEL; 
+	… where label refers to an earlier or later labelled section of code. 
+	
+• Target label MUST be in the same function as the goto statement. 
+
+• Notorious for creating hard-to-read code, but the concept is critical 
+to how computers operate.
+
+4.Static variables retain their value 
+throughout the life of the program.
+
+5.A variable has a scope in which it is said to be defined.
+
+6. Anonymous blocks demonstrate the concept of block scope.
+void foo(){
+    {int a;}
+    {
+        double a=3.14;
+        {
+            char * a = "3.14";
+        }
+    }
+    // no 'a' define in this scope
+}
+
+7.Uninitialized Memory
+• Uninitialized variables: 
+• Out-of-bounds array access: 
+
+• Variables passed out of their defining function’s scope. 
+• malloc(coming up in a later lecture) 

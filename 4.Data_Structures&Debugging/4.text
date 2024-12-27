@@ -1,0 +1,143 @@
+• Memory Leaks and Valgrind Tool
+• Structs and  Unions 
+• Opaque Types 
+• Enum and Typedef 
+• GDB Debugging Tool 
+
+
+1.Memory Leaks and Valgrind Tool 
+
+Illegal memory accesses (segmentation faults) 
+Stack overflow
+Double frees
+Dangerous use of uninitialized variables
+Memory leaks 
+
+(1)Memory leaks = allocated memory that’s not freed. 
+
+(2)Valgrind:A memory profiling tool. Helps you find memory leaks. 
+    Compile with debug mode (using -g flag).
+    gcc -g hello.c -o hello 
+
+    Includes tools such as memcheck, cachegrind, callgrind, etc…
+    Command line: 
+    valgrind  --tool=tool_name ./program_name 
+    Example: valgrind --tool=memcheck ./hello_world
+
+    $ valgrind --tool=memcheck ./hello_world 
+... �
+ =18515== malloc/free: in use at exit: 0 bytes in 0 blocks. �
+ ==18515== malloc/free: 1 allocs, 1 frees, 10 bytes allocated. �
+ ==18515== For a detailed leak analysis, rerun with: --leak
+check=yes
+
+(3)More Valgrind Functionalities 
+• Can also detect invalid pointer use 
+ char *arr = malloc(10); 
+ arr[10] = ‘a’ 
+• Using uninitialized variables 
+ int x; 
+ if(x==0){…} 
+• Double/invalid frees 
+• Valgrind doesn’t check bounds on statically allocated arrays though!
+
+
+2.Struct Memory
+• Struct size != sum of member sizes 
+• All members must “align” with largest member size 
+• Each member has own alignment requirements
+ Ex: char = 1-byte aligned. 
+short = 2-byte aligned. 
+int = 4-byte aligned. ←Refer to documentation
+
+3.Unions 
+ • Can only access one member at a time. Union stores all data in same chunk of memory.
+    union data{ 
+    int x; char y; 
+    }; 
+    union data mydata; 
+    mydata.y = 'a'; 
+    mydata.x = 1; 
+    printf(“%d\n”, mydata.x) // Will print out 1 
+    printf(“%c\n”, mydata,y) // Will print out JUNK! 
+
+4.Opaque Types
+ • Type exposed via pointers where definition can still change. 
+ Ex: Can change struct person definition in test.c without recompiling my_file.c 
+
+test.h: 
+struct person; 
+
+test.c: 
+struct person{ 
+… //def here 
+}; 
+
+my_file.c: 
+#include “test.h” 
+int person_function(struct person * ptr){ 
+… 
+} 
+
+
+5.Enum
+ • Define own variable type with a set of int values 
+ enum time_t { morning, noon, afternoon, night};
+ enum time_t class = morning;
+ if (class == afternoon) { … }
+
+ Why use Enum?
+ • Like a #define variable but is actually a C 
+element (has a type, obeys scoping rules)
+
+Summary 
+• Use Valgrind and GDB to find errors/memory bugs 
+• C structs and unions are like data “objects” 
+• Opaque types allow flexibility in struct/union usage 
+• Enum and Typedef saves you time! 
+
+6.Singly Linked Lists 
+• Nodes: 
+struct node{ 
+    int data; 
+    struct node* next; 
+};
+ typedef struct node node;
+ node* head = NULL;  //Points to beginning of list. Set to null initially.
+
+node* add_data(int data){
+    node* new_node = (node*) malloc(sizeof(node)); 
+    new_node->data = data; 
+    new_node->next = head; 
+    head = new_node; 
+    return new_node; 
+} 
+
+• Searching through list
+node * find_data(int data){
+    node* current; 
+    for( current = head; current->next!=NULL; current= current->next){ 
+        if(current->data == data) return current; 
+    } 
+    return NULL; 
+}
+
+ • Removing a certain data value 
+void rm_data(int data){ 
+    //Special case if the head has the data 
+    if( head->data == data ) {
+        node* tmp = head;
+        head = head->next;
+        free(tmp);
+        return;
+    } 
+    node* prev, *current; 
+    for(current = head; current->next!=NULL; current= current->next){ 
+        if(current->data == data){
+            prev->next = current->next;
+            free(current);
+            return ;
+        }
+        prev = current; 
+    }
+} 

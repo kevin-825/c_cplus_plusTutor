@@ -11,7 +11,7 @@ int main(){
     printf("%d\n", mydata.x); // Will print out 1
     printf("%c\n", mydata.y); // Will print out JUNK!
 
-    // Common Use of Unions �
+    // Common Use of Unions
     // • Union within struct 
     struct student{ 
         union grade{ 
